@@ -1,0 +1,20 @@
+body {
+  font-family: Arial;
+}
+.jumbotron {
+  padding: 6rem 1rem;
+  background-color: "";
+  text-align: center;
+}
+
+.about {
+  padding: 6rem 1rem;
+}
+
+.project {
+  padding: 6rem 1rem;
+}
+
+.contact {
+  padding: 6rem 1rem;
+}
