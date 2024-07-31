@@ -51,8 +51,8 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-6 fs-5" style="text-justify: inter-word; text-align: justify">
-            Saya adalah seorang mahasiswa yang memiliki minat dan passion dalam bidang pengembangan web. Dengan latar belakang pendidikan di Teknologi Informasi, saya telah memperoleh pemahaman dasar yang kuat mengenai konsep dalam
-            pengembangan web. Saya berdedikasi untuk mempelajari hal-hal baru dan menerapkan pengetahuan tersebut dalam projek nyata.
+            Saya seorang mahasiswa yang memiliki minat dan passion dalam bidang pengembangan web. Dengan latar belakang pendidikan di Teknologi Informasi, saya telah memperoleh pemahaman dasar yang kuat mengenai konsep dalam pengembangan
+            web. Saya berdedikasi untuk mempelajari hal-hal baru dan menerapkan pengetahuan tersebut dalam projek nyata.
           </div>
         </div>
       </div>
@@ -68,20 +68,20 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-4 mb-3">
-            <div class="card">
-              <img src="img/reservation.png" class="card-img-top" alt="..." />
-              <div class="card-body">
+            <div class="card rounded-0">
+              <img src="img/reservation.png" class="card-img-top rounded-0" alt="..." />
+              <div class="card-body rounded-0">
                 <h5 class="card-title">Kampung Batik Cibuluh</h5>
-                <p class="card-text" style="text-justify: inter-word; text-align: justify">Aplikasi web untuk melakukan reservasi kunjungan wisata pada Kampung Batik Cibuluh(tugas matakuliah).</p>
+                <p class="card-text" style="text-justify: inter-word; text-align: justify">Aplikasi web untuk melakukan reservasi kunjungan wisata pada Kampung Batik Cibuluh(tugas projek kuliah).</p>
               </div>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="card">
-              <img src="img/finance.png" class="card-img-top" alt="..." />
-              <div class="card-body">
+            <div class="card rounded-0">
+              <img src="img/finance.png" class="card-img-top rounded-0" alt="..." />
+              <div class="card-body rounded-0">
                 <h5 class="card-title">Uangku</h5>
-                <p class="card-text" style="text-justify: inter-word; text-align: justify">Aplikasi web untuk mengelola catatan keuangan pribadi(tugas matakuliah)</p>
+                <p class="card-text" style="text-justify: inter-word; text-align: justify">Aplikasi web untuk mengelola catatan keuangan pribadi(tugas projek kuliah)</p>
               </div>
             </div>
           </div>
@@ -99,20 +99,28 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <form>
+            <div class="alert alert-success alert-dismissible fade show d-none my-alert rounded-0" role="alert">
+              <strong>Terimakasih</strong> Pesan anda diterima.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form name="contact">
               <div class="mb-3">
                 <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control rounded-0" id="name" aria-describedby="name" />
+                <input type="text" class="form-control rounded-0" id="name" aria-describedby="name" name="nama" />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control rounded-0" id="email" aria-describedby="email" />
+                <input type="email" class="form-control rounded-0" id="email" aria-describedby="email" name="email" />
               </div>
               <div class="mb-3">
                 <label for="pesan" class="form-label">Pesan</label>
-                <textarea class="form-control rounded-0" id="pesan" rows="3"></textarea>
+                <textarea class="form-control rounded-0" id="pesan" rows="3" name="pesan"></textarea>
               </div>
-              <button type="submit" class="btn btn-dark rounded-0">Kirim</button>
+              <button type="submit" class="btn btn-dark rounded-0 btn-kirim">Kirim</button>
+              <button class="btn btn-dark rounded-0 btn-loading d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Loading...</span>
+              </button>
             </form>
           </div>
         </div>
@@ -127,5 +135,32 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbx6sjJuI4__kAPtRnliMK0n2_g3vHPHhCbf7z47lgDXB2c5WCE6bdFMspqKL8VODYIg/exec";
+      const form = document.forms["contact"];
+      const btnKirim = document.querySelector(".btn-kirim");
+      const btnLoading = document.querySelector(".btn-loading");
+      const alert = document.querySelector(".my-alert");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        //ketika tombol submit diklik
+        //tampilkan tombol loading, hilangkan tombol kirim
+        btnLoading.classList.toggle("d-none");
+        btnKirim.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            //tampilkan tombol kirim, hilangkan tombol loading
+            btnLoading.classList.toggle("d-none");
+            btnKirim.classList.toggle("d-none");
+            //tampilkan alert
+            alert.classList.toggle("d-none");
+            //reset form
+            form.reset();
+            console.log("Success!", response);
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
   </body>
 </html>
